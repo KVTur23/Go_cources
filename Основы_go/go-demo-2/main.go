@@ -5,6 +5,10 @@ import (
 )
 
 func main() {
+	tr := make([]string, 0, 2)
+	tr = append(tr, "1", "2", "3")
+	fmt.Println(tr)
+
 	fmt.Println("Программа приема транзакций")
 	transactions := []float64{}
 	for {
@@ -13,8 +17,7 @@ func main() {
 			break
 		}
 		transactions = append(transactions, new_pay)
-		repeat := checkRepeatTransaction()
-		if !repeat {
+		if new_pay == 0 {
 			break
 		}
 	}
@@ -24,27 +27,15 @@ func main() {
 
 func usrInput() float64 {
 	var pay float64
-	fmt.Print("input transaction pay ")
+	fmt.Print("input transaction pay, or 'n' for end ")
 	fmt.Scan(&pay)
-	//if pay <= 0 {
-	//	return 0, errors.New("No params ERROR")
-	//}
 	return pay
-}
-func checkRepeatTransaction() bool {
-	var userChoise string
-	fmt.Print("\nNeed some transactions? (y/n)")
-	fmt.Scan(&userChoise)
-	if userChoise == "y" || userChoise == "Y" {
-		return true
-	}
-	return false
 }
 
 func summTransaction(trans []float64) float64 {
 	budget := float64(0)
-	for i := 0; i < len(trans); i++ {
-		budget += trans[i]
+	for _, value := range trans {
+		budget += value
 	}
 	return budget
 }
